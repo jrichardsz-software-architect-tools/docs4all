@@ -1,0 +1,260 @@
+{
+    "/about": {
+        "id": 0,
+        "type": "node",
+        "order": 6,
+        "children": {
+            "/about/contributing.md": {
+                "id": 1,
+                "parent": 0,
+                "type": "child",
+                "name": "contributing.md",
+                "order": 1,
+                "targetAudience": "user",
+                "version": "1.0.0",
+                "children": {}
+            },
+            "/about/related-projects.md": {
+                "id": 2,
+                "parent": 0,
+                "type": "child",
+                "name": "related-projects.md",
+                "order": 1,
+                "targetAudience": "user",
+                "version": "1.0.0",
+                "children": {}
+            },
+            "/about/showcase.md": {
+                "id": 3,
+                "parent": 0,
+                "type": "child",
+                "name": "showcase.md",
+                "order": 1,
+                "targetAudience": "user",
+                "version": "1.0.0",
+                "children": {}
+            },
+            "/about/what-is-raneto.md": {
+                "id": 4,
+                "parent": 0,
+                "type": "child",
+                "name": "what-is-raneto.md",
+                "order": 1,
+                "targetAudience": "user",
+                "version": "1.0.0",
+                "children": {}
+            }
+        }
+    },
+    "/install": {
+        "id": 5,
+        "type": "node",
+        "order": 5,
+        "children": {
+            "/install/production-notes.md": {
+                "id": 6,
+                "parent": 5,
+                "type": "child",
+                "name": "production-notes.md",
+                "order": 1,
+                "targetAudience": "user",
+                "version": "1.0.0",
+                "children": {}
+            },
+            "/install/raneto": {
+                "id": 7,
+                "parent": 5,
+                "type": "node",
+                "children": {
+                    "/install/raneto/installing-raneto.md": {
+                        "id": 8,
+                        "parent": 7,
+                        "type": "child",
+                        "name": "installing-raneto.md",
+                        "order": 1,
+                        "targetAudience": "user",
+                        "version": "1.0.0",
+                        "children": {}
+                    }
+                }
+            },
+            "/install/requirements.md": {
+                "id": 9,
+                "parent": 5,
+                "type": "child",
+                "name": "requirements.md",
+                "order": 1,
+                "targetAudience": "user",
+                "version": "1.0.0",
+                "children": {}
+            }
+        }
+    },
+    "/templates": {
+        "id": 10,
+        "type": "node",
+        "order": 4,
+        "children": {
+            "/templates/customizing-the-template.md": {
+                "id": 11,
+                "parent": 10,
+                "type": "child",
+                "name": "customizing-the-template.md",
+                "order": 1,
+                "targetAudience": "user",
+                "version": "1.0.0",
+                "children": {}
+            }
+        }
+    },
+    "/tutorials": {
+        "id": 12,
+        "type": "node",
+        "order": 2,
+        "children": {
+            "/tutorials/deploying-raneto-to-heroku.md": {
+                "id": 13,
+                "parent": 12,
+                "type": "child",
+                "name": "deploying-raneto-to-heroku.md",
+                "order": 1,
+                "targetAudience": "user",
+                "version": "1.0.0",
+                "children": {}
+            },
+            "/tutorials/google-oauth-setup.md": {
+                "id": 14,
+                "parent": 12,
+                "type": "child",
+                "name": "google-oauth-setup.md",
+                "order": 1,
+                "targetAudience": "user",
+                "version": "1.0.0",
+                "children": {}
+            },
+            "/tutorials/running-as-a-service.md": {
+                "id": 15,
+                "parent": 12,
+                "type": "child",
+                "name": "running-as-a-service.md",
+                "order": 1,
+                "targetAudience": "user",
+                "version": "1.0.0",
+                "children": {}
+            }
+        }
+    },
+    "/updates": {
+        "id": 16,
+        "type": "node",
+        "order": 3,
+        "children": {
+            "/updates/updating-raneto.md": {
+                "id": 17,
+                "parent": 16,
+                "type": "child",
+                "name": "updating-raneto.md",
+                "order": 1,
+                "targetAudience": "user",
+                "title": "Updating Raneto",
+                "version": "1.0.0",
+                "children": {}
+            }
+        }
+    },
+    "/usage": {
+        "id": 18,
+        "type": "node",
+        "order": 1,
+        "children": {
+            "/usage/authentication.md": {
+                "id": 19,
+                "parent": 18,
+                "type": "child",
+                "name": "authentication.md",
+                "order": 1,
+                "targetAudience": "user",
+                "title": "Authentication",
+                "version": "1.0.0",
+                "children": {}
+            },
+            "/usage/category-meta.md": {
+                "id": 20,
+                "parent": 18,
+                "type": "child",
+                "name": "category-meta.md",
+                "order": 1,
+                "targetAudience": "user",
+                "title": "Category Meta",
+                "version": "1.0.0",
+                "children": {}
+            },
+            "/usage/configuration.md": {
+                "id": 21,
+                "parent": 18,
+                "type": "child",
+                "name": "configuration.md",
+                "order": 1,
+                "targetAudience": "user",
+                "title": "Configuration",
+                "version": "1.0.0",
+                "children": {}
+            },
+            "/usage/creating-pages.md": {
+                "id": 22,
+                "parent": 18,
+                "type": "child",
+                "name": "creating-pages.md",
+                "order": 1,
+                "targetAudience": "user",
+                "title": "Creating pages",
+                "version": "1.0.0",
+                "children": {}
+            },
+            "/usage/custom-homepage.md": {
+                "id": 23,
+                "parent": 18,
+                "type": "child",
+                "name": "custom-homepage.md",
+                "order": 1,
+                "targetAudience": "user",
+                "title": "Custom Homepage",
+                "version": "1.0.0",
+                "children": {}
+            },
+            "/usage/deleting-pages.md": {
+                "id": 24,
+                "parent": 18,
+                "type": "child",
+                "name": "deleting-pages.md",
+                "order": 1,
+                "targetAudience": "user",
+                "title": "Deleting pages",
+                "version": "1.0.0",
+                "children": {}
+            },
+            "/usage/page-meta.md": {
+                "id": 25,
+                "parent": 18,
+                "type": "child",
+                "name": "page-meta.md",
+                "order": 1,
+                "targetAudience": "user",
+                "title": "Page Meta",
+                "version": "1.0.0",
+                "children": {}
+            },
+            "/usage/sorting.md": {
+                "id": 26,
+                "parent": 18,
+                "type": "child",
+                "name": "sorting.md",
+                "order": 1,
+                "targetAudience": "user",
+                "title": "Sorting",
+                "version": "1.0.0",
+                "children": {}
+            }
+        }
+    }
+}

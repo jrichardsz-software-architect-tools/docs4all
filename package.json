@@ -1,0 +1,31 @@
+{
+  "name": "docs4all",
+  "version": "1.0.1",
+  "description": "docs4all",
+  "main": "src/main/Index.js",
+  "scripts": {
+    "start": "node src/main/Index.js",
+    "dev": "supervisor -e 'ejs|js|css|js|html|json'  src/main/Index.js",
+    "index": "node src/main/indexer/default/MemoryApi.js",
+    "test": "mocha ./src/test/Index.js --exit",
+    "coverage": "nyc --reporter=html mocha ./src/test/Index.js --exit"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "3.0.2",
+    "express": "4.17.1",
+    "express-basic-auth": "^1.2.0",
+    "find-package-json": "^1.2.0",
+    "lokijs": "^1.5.11",
+    "meta-js": "jrichardsz/meta-js#1.0.1-pre-alpha",
+    "nodejs-require-enhancer": "jrichardsz/nodejs-require-enhancer#master",
+    "serve-static": "1.14.1",
+    "supervisor": "0.12.0",
+    "uuid": "^8.3.1"
+  },
+  "devDependencies": {
+    "nyc": "^15.1.0",
+    "chai": "4.2.0",
+    "mocha": "8.1.3"
+  }
+}

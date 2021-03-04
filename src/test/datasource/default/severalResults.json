@@ -1,0 +1,63 @@
+[
+    {
+        "path": "/install/raneto/installing-raneto.md",
+        "id": 8,
+        "parent": 7,
+        "type": "child",
+        "name": "installing-raneto.md",
+        "order": 1,
+        "targetAudience": "user",
+        "version": "1.0.0"
+    },
+    {
+        "path": "/templates/customizing-the-template.md",
+        "id": 11,
+        "parent": 10,
+        "type": "child",
+        "name": "customizing-the-template.md",
+        "order": 1,
+        "targetAudience": "user",
+        "version": "1.0.0"
+    },
+    {
+        "path": "/tutorials/deploying-raneto-to-heroku.md",
+        "id": 13,
+        "parent": 12,
+        "type": "child",
+        "name": "deploying-raneto-to-heroku.md",
+        "order": 1,
+        "targetAudience": "user",
+        "version": "1.0.0"
+    },
+    {
+        "path": "/tutorials/google-oauth-setup.md",
+        "id": 14,
+        "parent": 12,
+        "type": "child",
+        "name": "google-oauth-setup.md",
+        "order": 1,
+        "targetAudience": "user",
+        "version": "1.0.0"
+    },
+    {
+        "path": "/tutorials/running-as-a-service.md",
+        "id": 15,
+        "parent": 12,
+        "type": "child",
+        "name": "running-as-a-service.md",
+        "order": 1,
+        "targetAudience": "user",
+        "version": "1.0.0"
+    },
+    {
+        "path": "/updates/updating-raneto.md",
+        "id": 17,
+        "parent": 16,
+        "type": "child",
+        "name": "updating-raneto.md",
+        "order": 1,
+        "targetAudience": "user",
+        "title": "Updating Raneto",
+        "version": "1.0.0"
+    }
+]

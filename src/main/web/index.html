@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%=title%></title>
+  <link rel="stylesheet" href="css/vendor/jquery-ui/jquery-ui-1.12.1.css">
+  <script src="js/vendor/jquery/jquery-1.12.4.js"></script>
+  <script src="js/vendor/jquery-ui/jquery-ui-1.12.1.js"></script>
+  <script type="text/javascript" src="js/vendor/menu/jquery.navgoco.js"></script>
+  <link rel="stylesheet" href="css/vendor/menu/jquery.navgoco.css" type="text/css" media="screen" />
+  <script type="text/javascript" src="js/vendor/markdown/markdown-it-12.0.4.min.js"></script>
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+  .navLogo_a {
+    <% if(locals.navHeaderFontSize){ %>
+      font-size: <%= navHeaderFontSize %>px !important;
+    <% } %>        
+  }    
+  </style>
+
+</head>
+
+<body>
+
+  <div id="mainContainer">
+    <div id="leftPane">
+      <div class="navLogo">
+        <a href="/" class="navLogo_a"> <%=title%> </a>
+        <a href="#" id="menu-button" class="navLogo_aa"> <svg viewBox="0 0 24 24" class="icon">
+            <use xlink:href="#svg-menu"></use>
+          </svg> </a></div>
+      <ul id="menuContainer" class="nav">
+      </ul>
+
+    </div>
+    <div id="rigthPane">
+      <div id="main-header" class="main-header">
+        <div class="search">
+          <div class="search-input-wrap">
+            <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search docs" aria-label="Search docs" autocomplete="off">
+            <label for="search-input" class="search-label">
+              <svg viewBox="0 0 24 24" class="search-icon">
+                <svg id="svg-search" viewBox="0 0 24 24">
+                  <title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="feather feather-search">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
+                </svg>
+              </svg>
+            </label>
+          </div>
+          <div id="search-results" class="search-results"></div>
+        </div>
+        <nav aria-label="Auxiliary" class="aux-nav">
+          <ul class="aux-nav-list">
+            <li class="aux-nav-list-item"> <a href="//github.com/jrichardsz/docs4all" class="site-button"> Docs4all on GitHub </a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div id="rigthPreview"></div>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="/js/MarkdownConverter.js"></script>
+  <script type="text/javascript" src="/js/ApiClient.js"></script>
+  <script type="text/javascript" src="/js/SearchController.js"></script>
+  <script type="text/javascript" src="/js/MenuEnhancer.js"></script>
+  <script type="text/javascript" src="/js/LeftMenuHtmlGenerator.js"></script>
+  <script type="text/javascript" src="/js/MenuController.js"></script>
+  <script type="text/javascript" src="/js/main.js"></script>
+
+</body>
+
+</html>
