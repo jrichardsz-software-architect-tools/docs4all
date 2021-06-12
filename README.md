@@ -40,7 +40,7 @@ docs4All.start({
 });
 ```
 
-- create a folder called "docs" and put inside any markdown file (*.md)
+- create a folder called "docs" and put inside any markdown file (\*.md)
 - npm install
 - npm run dev
 - go to `http://localhost:2708` to view the home page
@@ -51,6 +51,23 @@ docs4All.start({
 - set you desired port with `export PORT=8080`
 - npm run start
 
+# Security
+
+```
+export ENABLE_SECURITY=true
+export AUTH_USER=jane
+export AUTH_PASSWORD=doe
+```
+
+# BFA Prevent
+
+```
+export ENABLE_BFA_PROTECTION=true
+export BFA_WINDOW_MS_MINUTES=5
+export BFA_MAX_CONN=100
+```
+
+docs: https://www.npmjs.com/package/express-rate-limit
 
 # Inspiration
 
@@ -62,3 +79,8 @@ docs4All.start({
 - https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css
 - https://code.jquery.com/ui/1.12.1/jquery-ui.js
 - https://code.jquery.com/jquery-1.12.4.js
+
+
+# Coming soon
+
+- add login page instead basic auth

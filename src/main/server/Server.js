@@ -3,6 +3,7 @@ var serveStatic = require('serve-static');
 var path = require('path');
 var finder = require('find-package-json');
 var bodyParser = require('body-parser');
+var rateLimit = require("express-rate-limit");
 
 @Entrypoint(name = "server")
 
@@ -30,6 +31,15 @@ function Server() {
     this.expressInstance.engine('html', require('ejs').renderFile);
 
     this.expressInstance.use(bodyParser.json());
+
+    if (process.env.ENABLE_BFA_PROTECTION == "true") {
+      const limiter = rateLimit({
+        windowMs: process.env.BFA_WINDOW_MS_MINUTES * 60 * 1000 || 15 * 60 * 1000, // 15 minutes
+        max: process.env.BFA_MAX_CONN || 50 // limit each IP to 50 requests per windowMs
+      });
+      //  apply to all requests
+      this.expressInstance.use(limiter);
+    }
 
     /*Optional security*/
     if (process.env.ENABLE_SECURITY == "true") {
