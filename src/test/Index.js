@@ -1,6 +1,7 @@
-require('nodejs-require-enhancer');// require enhancement
+// require('nodejs-require-enhancer');// require enhancement
 var meta = require('meta-js');
-require('meta-js').NodeInternalModulesHook._compile(); //comment annotations
+const NodeInternalModulesHook = require('meta-js').NodeInternalModulesHook;
+NodeInternalModulesHook._compile(); //comment annotations
 
 //load tests
 require('datasource/default/MemoryDatasourceTest.js');

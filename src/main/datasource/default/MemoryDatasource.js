@@ -12,22 +12,22 @@ function MemoryDatasource() {
 
   this.getDocuments = () => {
     return this.database.getCollection('documents');
-  };  
-  
+  };
+
   this.setDocumentsBaseDir = (documentsBaseDir) => {
     return this.documentsBaseDir = documentsBaseDir;
-  };  
-  
+  };
+
   this.getDocumentsBaseDir = () => {
     return this.documentsBaseDir;
-  };  
+  };
 
   this.loadDocuments = (dir, parent) => {
 
     if (dir[dir.length - 1] != '/') dir = dir.concat('/')
 
     var fs = fs || require('fs'),
-      files = fs.readdirSync(dir);    
+      files = fs.readdirSync(dir);
     files.forEach((file) => {
       if (fs.statSync(dir + file).isDirectory()) {
         let id = this.next();
@@ -64,23 +64,31 @@ function MemoryDatasource() {
 
       }
     });
-  };  
-  
+  };
+
   //todo: delete meta and skip content
-  this.findAll = () => {
+  this.findAllDeprecated = () => {
     var resources = this.getDocuments();
     return resources.chain().data({ removeMeta: true });
-      
-    // var docArray = resources.chain().find({}).map(
-    //     function(doc) {
-    //         // ...
-    //         return doc
-    //     })
-    //     .data();    
-    // 
-    // return docArray;
   }
-  
+
+  this.findAll = (filterColumns) => {
+    var resources = this.getDocuments();
+    if(typeof filterColumns === 'undefined' || typeof filterColumns.length === 'undefined'){
+      return resources.data;
+    }
+    const records = []
+    for(_doc of resources.data){
+      let doc = Object.assign({}, _doc);
+      for(column of filterColumns){
+        delete doc[column];
+      }
+      records.push(doc);
+    }
+
+    return records;
+  }
+
   this.findByAudienceTarget = (targetAudience) => {
     var resources = this.getDocuments();
     var results = resources.find({
@@ -91,7 +99,7 @@ function MemoryDatasource() {
 
     return results;
   }
-  
+
   this.findDocumentByAndRestrictions = (queryCollection) => {
     var resources = this.getDocuments();
     var results = resources.find({
@@ -100,7 +108,7 @@ function MemoryDatasource() {
 
     return results;
   }
-  
+
   this.getTreeMenuByAudienceTargetType = (audienceTargetType) => {
     var resources = this.getDocuments();
     var results = resources.find({
@@ -112,10 +120,10 @@ function MemoryDatasource() {
     var treeMenu = {};
     results.forEach((menuItem) => {
       this.createInnerMenuFromSimplePaths(menuItem.path, treeMenu, null, resources);
-    });    
+    });
     return treeMenu;
   }
-  
+
   this.searchByContent = (audienceTargetType, contentPart) => {
     var resources = this.getDocuments();
     var results = resources.find({
@@ -129,19 +137,19 @@ function MemoryDatasource() {
         }
       ]
     });
-    
+
     var foundResources = [];
     results.forEach(function(foundResource){
       let modifiedResource = {...foundResource}
       delete modifiedResource.meta
       delete modifiedResource.$loki
-      delete modifiedResource.content 
+      delete modifiedResource.content
       foundResources.push(modifiedResource);
     });
-    
+
     return foundResources;
-  }  
-  
+  }
+
 
   this.getFixedPath = (baseDir, absolutePath) => {
     return (excludeRootDirInPath === true) ? absolutePath.replace(baseDir, "") : absolutePath
@@ -156,7 +164,7 @@ function MemoryDatasource() {
     } catch (e) {
       console.log(`meta has an error :${file}, ${e}`);
       return;
-    }     
+    }
   }
 
   this.getMetaForDirectoryIfExist = (file) => {
@@ -168,9 +176,9 @@ function MemoryDatasource() {
     } catch (e) {
       console.log(`meta has an error :${file}, ${e}`);
       return;
-    }    
+    }
   }
-  
+
   this.getMetaForDirectoryIfExist = (file) => {
     try {
       if (fs.existsSync(file + "/meta.json")) {
@@ -180,7 +188,7 @@ function MemoryDatasource() {
     } catch (e) {
       console.log(`meta has an error :${file}, ${e}`);
       return;
-    }    
+    }
   }
 
   this.getMetaForMarkdownIfExist = (file) => {
@@ -215,12 +223,12 @@ function MemoryDatasource() {
         .find({
           'path': absolutePath
         });
-        
-      var resource = {...data[0]}  
+
+      var resource = {...data[0]}
       delete resource.path
       delete resource.meta
       delete resource.$loki
-      delete resource.content 
+      delete resource.content
 
       resource.children = {}
       parentNode[absolutePath] = resource;
