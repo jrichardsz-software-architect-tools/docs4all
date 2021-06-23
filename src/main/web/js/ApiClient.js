@@ -33,14 +33,29 @@ function ApiClient(){
     });
   };
 
-  this.findDocumentByAndRestrictions = (resource, query) => {
-    //add sort param
-    var url = `${apiBaseUrl}/api/${resource}/query/and`;
+  this.findDocumentByPath = (resource, path) => {
+    var url = `${apiBaseUrl}/api/${resource}/path`;
     return new Promise(function(resolve, reject) {
         $.ajax({
           url: url,
           type: "POST",
-          data: JSON.stringify(query),
+          data: JSON.stringify({"path":path}),
+          contentType:"application/json; charset=utf-8",
+          dataType: "JSON",
+          success: function(data) {
+            resolve(data);
+          }
+        });
+    });
+  };
+
+  this.findDocumentByContent = (resource, text) => {
+    var url = `${apiBaseUrl}/api/${resource}/content`;
+    return new Promise(function(resolve, reject) {
+        $.ajax({
+          url: url,
+          type: "POST",
+          data: JSON.stringify({"text":text}),
           contentType:"application/json; charset=utf-8",
           dataType: "JSON",
           success: function(data) {

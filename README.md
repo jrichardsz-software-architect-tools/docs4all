@@ -53,11 +53,8 @@ docs4All.start({
 
 # Security
 
-```
-export ENABLE_SECURITY=true
-export AUTH_USER=jane
-export AUTH_PASSWORD=doe
-```
+In order to have a login, you must export the following variables
+
 ## Users
 
 ```
@@ -66,12 +63,17 @@ export DOCS4ALL_USER_jane="changeme , all"
 export DOCS4ALL_USER_kurt="secret , custom_role_1"
 ```
 
+Syntax is `password : role`
+role with "all" value, allows the user to view all documents
+
 ## Roles
 
 ```
-export DOCS4ALL_ROLE_custom_role_1=/about.md , /install/aws/ec2.md
+export DOCS4ALL_ROLE_custom_role_1="/about.md , /install/aws/ec2.md"
+export DOCS4ALL_ROLE_custom_role_2="/help.md , /languages/java.md"
 ```
 
+Create custom roles with specific documents
 
 # BFA Prevent
 
@@ -97,4 +99,5 @@ docs: https://www.npmjs.com/package/express-rate-limit
 
 # Coming soon
 
-- add login page instead basic auth
+- add login as plugin
+- improve search ui response

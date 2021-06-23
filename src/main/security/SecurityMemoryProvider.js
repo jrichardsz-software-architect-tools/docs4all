@@ -25,7 +25,11 @@ function SecurityMemoryProvider() {
     };
     this.users = this.environmentHelper.findByPrefix("DOCS4ALL_USER_", configUsers);
     this.rolePaths = this.environmentHelper.findByPrefix("DOCS4ALL_ROLE_", configPaths);
-    console.log(this.users);
+    console.log("users:");
+    for(username in this.users){
+      console.log("user: "+username+" role: "+this.users[username].role);
+    }
+    console.log("roles:");
     console.log(this.rolePaths);
   };
 

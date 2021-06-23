@@ -66,13 +66,8 @@ function MenuController(){
       console.log(`document path is undefined.`);
       return;
     }
-    var query = [
-      {
-        "path": documentPath
-      }
-    ]
     //search document by path
-    apiClient.findDocumentByAndRestrictions('document', query)
+    apiClient.findDocumentByPath('document', documentPath)
     .then((response) =>{
 
       console.log(response);

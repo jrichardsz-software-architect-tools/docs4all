@@ -19,7 +19,8 @@ function ApiRouter() {
     this.memoryDatasource.setDocumentsBaseDir(this.options.documentsLocation);
     this.memoryDatasource.loadDocuments(this.memoryDatasource.getDocumentsBaseDir());
     this.server.getExpressInstance().get('/api/document', this.ensurePermissions, this.findDocument);
-    this.server.getExpressInstance().post('/api/document/query/and', this.ensurePermissions, this.findDocumentByAndRestrictions);
+    this.server.getExpressInstance().post('/api/document/path', this.ensurePermissions, this.findDocumentByPath);
+    this.server.getExpressInstance().post('/api/document/content', this.ensurePermissions, this.findDocumentByContent);
   };
 
   this.findDocument = (req, res) => {
@@ -47,23 +48,67 @@ function ApiRouter() {
     }
   };
 
-  this.findDocumentByAndRestrictions = (req, res) => {
+  this.findDocumentByPath = (req, res) => {
     var filter = ["meta", "$loki"];
     var role = req.session['login_user'].role;
     var paths = this.securityMemoryProvider.findPathsByRole(role);
     var data;
+    var query = [
+      {
+        "path": req.body.path
+      }
+    ]
     try {
       if (role === "all") {
-        data = this.memoryDatasource.findDocumentByAndRestrictions(req.body, filter);
+        data = this.memoryDatasource.findDocumentByAndRestrictions(query, filter);
       } else {
-        if(paths.includes(req.body[0].path)){
-          data = this.memoryDatasource.findDocumentByAndRestrictions(req.body, filter);
+        if(paths.includes(req.body.path)){
+          data = this.memoryDatasource.findDocumentByAndRestrictions(query, filter);
         }else{
           return res.json({
             "code": 403003,
-            "message": "You dont'n have access to this document."
+            "message": "You don't have access to this document."
           });
         }
+      }
+      return res.json({
+        "code": 200000,
+        "message": "success",
+        "content": data
+      })
+    } catch (e) {
+      console.log(e);
+      res.json({
+        "error": e
+      })
+    }
+  };
+
+  this.findDocumentByContent = (req, res) => {
+    var filter = ["meta", "$loki"];
+    var role = req.session['login_user'].role;
+    var paths = this.securityMemoryProvider.findPathsByRole(role);
+    var query = [
+      {
+        "content": {
+          "$regex": [req.body.text,"i"]
+        }
+      }
+    ];
+    var data;
+    try {
+      var allData = this.memoryDatasource.findDocumentByAndRestrictions(query, filter);
+      if (role === "all") {
+        data = allData;
+      } else {
+        var allowedDocuments = [];
+        for(documentFound of allData){
+          let doc = Object.assign({}, documentFound);
+          if(paths.includes(doc.path)){
+            allowedDocuments.push(doc);
+          }
+        }
+        data = allowedDocuments;
       }
       return res.json({
         "code": 200000,

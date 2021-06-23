@@ -1,6 +1,9 @@
 @Module(name="securityServerConfigurer")
 function SecurityServerConfigurer() {
 
+  @Autowire(name = "options")
+  this.options;
+
   @Autowire(name = "securityMemoryProvider")
   this.securityMemoryProvider;
 
@@ -27,9 +30,10 @@ function SecurityServerConfigurer() {
 
   this.showLogin = (req, res, next) => {
     var login_message = req.session['login.message'] || "";
+    var title = this.options.design.title;
     var html = `
     <body onload="document.getElementById('initial_url').value = document.location.href" >
-        <center> <h1> Docs4All Login </h1> </center>
+        <center> <h1> ${title} Login </h1> </center>
         <form action="/login" method="post" >
             <div class="container" style="text-align: center;">
                 <input id="initial_url" name="initial_url" type="hidden">
@@ -58,10 +62,16 @@ function SecurityServerConfigurer() {
 
     if (typeof req.body.username === 'undefined' || typeof req.body.password === 'undefined') {
       req.session['login.message'] = "User or password incorrect";
-      res.redirect("/login");
+      return res.redirect("/login");
     }
 
     let storedUser = this.securityMemoryProvider.findUser(req.body.username);
+
+    if (typeof storedUser === 'undefined') {
+      req.session['login.message'] = "User or password incorrect";
+      return res.redirect("/login");
+    }
+
     let rolePaths  = this.securityMemoryProvider.findPathsByRole(storedUser.role);
     if (typeof storedUser === 'undefined' || req.body.password !== storedUser.password) {
       req.session['login.message'] = "User or password incorrect";

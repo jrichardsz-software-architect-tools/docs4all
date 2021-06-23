@@ -24,6 +24,10 @@ function Server() {
 
   this.init = () => {
 
+    this.validateRequiredOptions(this.options);
+    console.log("options:");
+    console.log(this.options);
+
     this.setAppBaseDirectory();
 
     var staticAssets = new serveStatic(this.baseDirectory + "/src/main/web", {
@@ -71,6 +75,7 @@ function Server() {
         if(typeof req.session['initial_url'] !== 'undefined'){
           res.setHeader("x-initial",req.session['initial_url'])
         }
+        //TODO: Validate if options has the required variables
         res.render('index.html', this.options.design);
       } else {
         return staticAssets(req, res, next);
@@ -94,6 +99,24 @@ function Server() {
 
   this.getAppBaseDirectory = () => {
     return this.baseDirectory;
+  };
+
+  this.validateRequiredOptions = (initialOptions) => {
+    if(typeof initialOptions==='undefined'){
+      throw new Error("At least documentsLocation config is required");
+    }
+    if(typeof initialOptions.documentsLocation==='undefined'){
+      throw new Error("documentsLocation config is required");
+    }
+
+    if(typeof initialOptions.design==='undefined'){
+      initialOptions.design = {
+        "title":"Docs4All"
+      };
+    }
+    if(typeof initialOptions.design.title==='undefined'){
+      initialOptions.design.title = "Docs4All";
+    }
   };
 
 }

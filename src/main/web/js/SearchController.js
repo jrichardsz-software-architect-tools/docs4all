@@ -5,7 +5,6 @@ function SearchController(){
 
   this.perform = () => {
     this.addActionListeners();
-    window.onhashchange = locationHashChanged;
   };
 
   this.addActionListeners = () => {
@@ -20,16 +19,15 @@ function SearchController(){
       window.location.hash = "/";
       return;
     }
-    var query = [
-      {
-        "content": {
-          "$regex": [val,"i"]
-        }
-      }
-    ]
-    apiClient.findDocumentByAndRestrictions('document', query)
-    .then((documents) =>{
+    apiClient.findDocumentByContent('document', val)
+    .then((response) =>{
 
+      console.log(response);
+      if(response.code != 200000){
+        return;
+      }
+
+      var documents = response.content;
       if(typeof documents === 'undefined' || documents.length === 0){
         $("#rigthPreview").html("");
       }
@@ -43,41 +41,7 @@ function SearchController(){
         $("#searchResultContainer").append(`<li><a href="#${document.path}"><span class="tab">${document.name}</span></a></li>`);
       });
     });
-
   };
-
-  function locationHashChanged() {
-    var fragment = location.hash.replace("#", "");
-
-    if(typeof fragment === 'undefined' || fragment===""){
-      return;
-    }
-
-
-    var query = [
-      {
-        "path": fragment
-      }
-    ]
-    //search document by path
-    apiClient.findDocumentByAndRestrictions('document', query)
-    .then((response) =>{
-      console.log(response);
-      if(response.code != 200000){
-        return;
-      }
-      var pages = response.content;
-
-      if(typeof pages === 'undefined' || pages.length === 0 || typeof pages[0].content === 'undefined'){
-        return;
-      }
-
-      var html = markdownConverter.render(pages[0].content);
-      //add table style
-      html = html.replace(/<table>/g, '<table class="styled-table">');
-      $("#rigthPreview").html(html);
-    });
-  }
 
 }
 
