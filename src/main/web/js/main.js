@@ -11,7 +11,7 @@ $(document).ready(function() {
   req.send(null);
   var headers = parseHttpHeaders(req.getAllResponseHeaders());
 
-  var initialUrl = headers['x-initial'].replace(/(\r\n|\n|\r)/gm, "");
+  var initialUrl = headers['x-initial'] ? headers['x-initial'].replace(/(\r\n|\n|\r)/gm, "") : undefined;
   console.log("initialUrl:"+initialUrl);
   var locationUrl = location.hash.replace("#", "");
   console.log("locationUrl:"+locationUrl);

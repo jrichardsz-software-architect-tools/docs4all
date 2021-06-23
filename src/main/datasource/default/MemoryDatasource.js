@@ -129,13 +129,26 @@ function MemoryDatasource() {
     return results;
   }
 
-  this.findDocumentByAndRestrictions = (queryCollection) => {
+  this.findDocumentByAndRestrictions = (queryCollection, filterColumns) => {
+
     var resources = this.getDocuments();
     var results = resources.find({
       $and: queryCollection
     });
+    if(typeof filterColumns === 'undefined' || typeof filterColumns.length === 'undefined'){
+      return results;
+    }
 
-    return results;
+    const records = [];
+    for(_doc of results){
+      let doc = Object.assign({}, _doc);
+      for(column of filterColumns){
+        delete doc[column];
+      }
+      records.push(doc);
+    }
+
+    return records;
   }
 
   this.getTreeMenuByAudienceTargetType = (audienceTargetType) => {

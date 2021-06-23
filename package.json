@@ -16,7 +16,6 @@
     "cookie-parser": "^1.4.5",
     "ejs": "3.0.2",
     "express": "4.17.1",
-    "express-basic-auth": "^1.2.0",
     "express-rate-limit": "^5.2.6",
     "express-session": "^1.17.2",
     "find-package-json": "^1.2.0",

@@ -11,8 +11,12 @@ function MenuController(){
 
   this.loadMenu = () => {
     apiClient.find('document')
-    .then((menu) =>{
-      var enhancedMenu = menuEnhancer.perform(menu.data);
+    .then((response) =>{
+      console.log(response);
+      if(response.code != 200000){
+        return;
+      }
+      var enhancedMenu = menuEnhancer.perform(response.content);
       var menuString = leftMenuHtmlGenerator.createComplexMenu(enhancedMenu);
       $("#menuContainer").append(menuString)
       $("#menuContainer").navgoco({
@@ -69,7 +73,13 @@ function MenuController(){
     ]
     //search document by path
     apiClient.findDocumentByAndRestrictions('document', query)
-    .then((pages) =>{
+    .then((response) =>{
+
+      console.log(response);
+      if(response.code != 200000){
+        return;
+      }
+      var pages = response.content;
       if(typeof pages === 'undefined' || pages.length === 0 || typeof pages[0].content === 'undefined'){
         return;
       }

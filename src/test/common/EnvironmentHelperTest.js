@@ -6,7 +6,7 @@ require("SetupTest.js");
 const EnvironmentHelper = require("common/EnvironmentHelper.js");
 var environmentHelper = new EnvironmentHelper();
 
-describe('common/EnvironmentSource.js \tfindByPrefix()', function() {
+describe('common/EnvironmentHelper.js \tfindByPrefix()', function() {
   it('read vars without config', function() {
     process.env['USER_jane'] = "pass1 , all";
     process.env['USER_kurt'] = "pass2 , role1";
@@ -45,19 +45,19 @@ describe('common/EnvironmentSource.js \tfindByPrefix()', function() {
     expect(data.kurt.password).to.equal("pass2");
     expect(data.kurt.role).to.equal("role1");
   });
-  it('read vars as object', function() {
-    process.env['USER_jane'] = "item1, item2, item3";
-    process.env['USER_kurt'] = "item4   , item5";
+  it('read vars as array', function() {
+    process.env['ROLE_all'] = "item1, item2, item3";
+    process.env['ROLE_dev'] = "item4   , item5";
     var config = {
       "outputType":"array",
       "splitChar":","
     };
-    var data = environmentHelper.findByPrefix("USER_", config);
+    var data = environmentHelper.findByPrefix("ROLE_", config);
     assert(data);
     console.log(JSON.stringify(data, null, 4));
-    expect(data.jane.length).to.equal(3);
-    expect(data.kurt.length).to.equal(2);
-    expect(data.kurt[0]).to.equal("item4");
-    expect(data.kurt[1]).to.equal("item5");
+    expect(data.all.length).to.equal(3);
+    expect(data.dev.length).to.equal(2);
+    expect(data.dev[0]).to.equal("item4");
+    expect(data.dev[1]).to.equal("item5");
   });
 });

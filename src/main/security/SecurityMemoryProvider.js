@@ -8,9 +8,10 @@ function SecurityMemoryProvider() {
   this.environmentHelper;
 
   this.users;
+  this.rolePaths;
 
-  this.loadUsers = () => {
-    var config = {
+  this.loadSecurityMatrix = () => {
+    var configUsers = {
       "outputType":"object",
       "splitChar":",",
       "indexNames":{
@@ -18,12 +19,19 @@ function SecurityMemoryProvider() {
         "1":"role"
       }
     };
-    this.users = this.environmentHelper.findByPrefix("DOCS4ALL_USER_", config);
+    var configPaths = {
+      "outputType":"array",
+      "splitChar":","
+    };
+    this.users = this.environmentHelper.findByPrefix("DOCS4ALL_USER_", configUsers);
+    this.rolePaths = this.environmentHelper.findByPrefix("DOCS4ALL_ROLE_", configPaths);
+    console.log(this.users);
+    console.log(this.rolePaths);
   };
 
   this.getUsersForBasicAuth = () => {
     if(typeof this.users === 'undefined'){
-      this.loadUsers();
+      this.loadSecurityMatrix();
     }
     let basicAuthData = {};
     for(userName in this.users){
@@ -34,13 +42,17 @@ function SecurityMemoryProvider() {
 
   this.findUser = (username) => {
     if(typeof this.users === 'undefined'){
-      this.loadUsers();
+      this.loadSecurityMatrix();
     }
     return this.users[username];
   };
 
-
-
+  this.findPathsByRole = (role) => {
+    if(typeof this.rolePaths === 'undefined'){
+      this.loadSecurityMatrix();
+    }
+    return this.rolePaths[role];
+  };
 }
 
 module.exports = SecurityMemoryProvider;
