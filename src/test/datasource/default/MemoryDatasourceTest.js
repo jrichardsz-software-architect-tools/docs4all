@@ -8,16 +8,18 @@ var finder = require('find-package-json');
 var f = finder(__dirname);
 var rootDirectory = path.dirname(f.next().filename);
 
-describe('/datasource/default/MemoryDatasource.js', function() {
+var testDocumentsPath = `${rootDirectory}/src/test/datasource/default/docs_for_test`;
+
+describe('datasource/default/MemoryDatasource.js', function() {
   it('loadDocuments', function() {
     var memoryDatasource = new MemoryDatasource();
-    memoryDatasource.setDocumentsBaseDir(`${rootDirectory}/src/test/docs_for_test`);
+    memoryDatasource.setDocumentsBaseDir(testDocumentsPath);
     assert(memoryDatasource);
     memoryDatasource.loadDocuments(memoryDatasource.getDocumentsBaseDir());
     var loadedResources = memoryDatasource.getDocuments();
     // console.log(JSON.stringify(loadedResources, null, 4));
     //29 resources
-    expect(loadedResources.data.length).to.equal(29);
+    expect(loadedResources.data.length).to.equal(30);
 
     //must exist /about resource
     var aboutResource = memoryDatasource.getDocuments().find({'path': "/about"});
@@ -52,12 +54,12 @@ describe('/datasource/default/MemoryDatasource.js', function() {
 
   it('findAll with filterColumns', function() {
     var memoryDatasource = new MemoryDatasource();
-    memoryDatasource.setDocumentsBaseDir(`${rootDirectory}/src/test/docs_for_test`);
+    memoryDatasource.setDocumentsBaseDir(testDocumentsPath);
     assert(memoryDatasource);
     memoryDatasource.loadDocuments(memoryDatasource.getDocumentsBaseDir());
     var filter = ["meta","$loki","content"];
     var loadedResources = memoryDatasource.findAll(filter);
-    expect(loadedResources.length).to.equal(29);
+    expect(loadedResources.length).to.equal(30);
     expect(loadedResources[0].meta).to.equal(undefined);
     expect(loadedResources[0]['$loki']).to.equal(undefined);
     expect(loadedResources[0].content).to.equal(undefined);
@@ -65,7 +67,7 @@ describe('/datasource/default/MemoryDatasource.js', function() {
 
   it('getTreeMenuByAudienceTargetType', function() {
     var memoryDatasource = new MemoryDatasource();
-    memoryDatasource.setDocumentsBaseDir(`${rootDirectory}/src/test/docs_for_test`);
+    memoryDatasource.setDocumentsBaseDir(testDocumentsPath);
     assert(memoryDatasource);
     memoryDatasource.loadDocuments(memoryDatasource.getDocumentsBaseDir());
     // console.log(JSON.stringify(memoryDatasource.getDocuments().data, null, 4));
@@ -99,7 +101,7 @@ describe('/datasource/default/MemoryDatasource.js', function() {
 
   it('searchByContent', function() {
     var memoryDatasource = new MemoryDatasource();
-    memoryDatasource.setDocumentsBaseDir(`${rootDirectory}/src/test/docs_for_test`);
+    memoryDatasource.setDocumentsBaseDir(testDocumentsPath);
     assert(memoryDatasource);
     memoryDatasource.loadDocuments(memoryDatasource.getDocumentsBaseDir());
 
@@ -112,4 +114,60 @@ describe('/datasource/default/MemoryDatasource.js', function() {
     expect(severalResults.length).to.equal(6);
     // console.log(JSON.stringify(severalResults, null, 4));
   });
+
+  it('findByPaths path does not exist', function() {
+    var memoryDatasource = new MemoryDatasource();
+    memoryDatasource.setDocumentsBaseDir(testDocumentsPath);
+    assert(memoryDatasource);
+    memoryDatasource.loadDocuments(memoryDatasource.getDocumentsBaseDir());
+    var filter = ["meta","$loki","content"];
+    var loadedResources = memoryDatasource.findByPaths(filter, ["/foo/bar"]);
+    console.log(JSON.stringify(loadedResources, null, 4));
+    expect(loadedResources.length).to.equal(0);
+  });
+
+  it('findByPaths one path - 2 levels', function() {
+    var memoryDatasource = new MemoryDatasource();
+    memoryDatasource.setDocumentsBaseDir(testDocumentsPath);
+    assert(memoryDatasource);
+    memoryDatasource.loadDocuments(memoryDatasource.getDocumentsBaseDir());
+    var filter = ["meta","$loki","content"];
+    var loadedResources = memoryDatasource.findByPaths(filter, ["/about/related-projects.md"]);
+    console.log(JSON.stringify(loadedResources, null, 4));
+    expect(loadedResources.length).to.equal(2);
+  });
+
+  it('findByPaths one path - 3 levels', function() {
+    var memoryDatasource = new MemoryDatasource();
+    memoryDatasource.setDocumentsBaseDir(testDocumentsPath);
+    assert(memoryDatasource);
+    memoryDatasource.loadDocuments(memoryDatasource.getDocumentsBaseDir());
+    var filter = ["meta","$loki","content"];
+    var loadedResources = memoryDatasource.findByPaths(filter, ["/install/raneto/installing-raneto.md"]);
+    console.log(JSON.stringify(loadedResources, null, 4));
+    expect(loadedResources.length).to.equal(3);
+  });
+
+  it('findByPaths 2 paths - several levels', function() {
+    var memoryDatasource = new MemoryDatasource();
+    memoryDatasource.setDocumentsBaseDir(testDocumentsPath);
+    assert(memoryDatasource);
+    memoryDatasource.loadDocuments(memoryDatasource.getDocumentsBaseDir());
+    var filter = ["meta","$loki","content"];
+    var loadedResources = memoryDatasource.findByPaths(filter, ["/install/raneto/installing-raneto.md", "/usage/sorting.md"]);
+    console.log(JSON.stringify(loadedResources, null, 4));
+    expect(loadedResources.length).to.equal(5);
+  });
+
+  it('findByPaths one path - no-child', function() {
+    var memoryDatasource = new MemoryDatasource();
+    memoryDatasource.setDocumentsBaseDir(testDocumentsPath);
+    assert(memoryDatasource);
+    memoryDatasource.loadDocuments(memoryDatasource.getDocumentsBaseDir());
+    var filter = ["meta","$loki","content"];
+    var loadedResources = memoryDatasource.findByPaths(filter, ["/no_child"]);
+    console.log(JSON.stringify(loadedResources, null, 4));
+    expect(loadedResources.length).to.equal(1);
+  });
+
 });

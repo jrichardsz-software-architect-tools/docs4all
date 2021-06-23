@@ -5,3 +5,4 @@ NodeInternalModulesHook._compile(); //comment annotations
 
 //load tests
 require('datasource/default/MemoryDatasourceTest.js');
+require('common/EnvironmentHelperTest.js');

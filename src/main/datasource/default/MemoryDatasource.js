@@ -89,6 +89,35 @@ function MemoryDatasource() {
     return records;
   }
 
+  this.findByPaths = (filterColumns, paths) => {
+    var resources = this.getDocuments();
+    if(typeof filterColumns === 'undefined' || typeof filterColumns.length === 'undefined'){
+      return resources.data;
+    }
+    const records = []
+    for(_doc of resources.data){
+      var count=0;
+      for(path of paths){
+        if(path.startsWith(_doc.path)){
+          count++;
+          break;
+        }
+      }
+      //this path is not contained in the provided set
+      if(count==0){
+        continue;
+      }
+
+      let doc = Object.assign({}, _doc);
+      for(column of filterColumns){
+        delete doc[column];
+      }
+      records.push(doc);
+    }
+
+    return records;
+  }
+
   this.findByAudienceTarget = (targetAudience) => {
     var resources = this.getDocuments();
     var results = resources.find({

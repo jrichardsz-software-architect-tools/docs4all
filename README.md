@@ -58,6 +58,20 @@ export ENABLE_SECURITY=true
 export AUTH_USER=jane
 export AUTH_PASSWORD=doe
 ```
+## Users
+
+```
+export DOCS4ALL_ENABLE_SECURITY=true
+export DOCS4ALL_USER_jane="changeme : all"
+export DOCS4ALL_USER_kurt="secret : custom_role_1"
+```
+
+## Roles
+
+```
+export ROLE_custom_role_1=/about.md , /install/aws/ec2.md
+```
+
 
 # BFA Prevent
 

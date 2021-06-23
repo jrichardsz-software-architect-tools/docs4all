@@ -20,6 +20,7 @@ function ApiRouter(){
   };
 
   this.findDocument = (req, res) => {
+    console.log(req.session['login_user']);
     try {
         res.json({"data":this.memoryDatasource.findAll()})
     } catch (e) {
